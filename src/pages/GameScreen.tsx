@@ -153,6 +153,7 @@ const GameScreen = () => {
     setIsTimerRunning(false);
 
     const isCorrect = index === currentQuestion?.correctAnswer;
+    const newMicrophoneCount = isCorrect ? microphones : microphones - 1;
 
     if (isCorrect) {
       playCorrectSound();
@@ -162,19 +163,20 @@ const GameScreen = () => {
     } else {
       playWrongSound();
       setAnswerState('wrong');
-      setMicrophones(microphones - 1);
+      setMicrophones(newMicrophoneCount);
     }
 
     setTotalAnswered(prev => prev + 1);
 
+    // Delay of 2 seconds to show the result before moving on
     setTimeout(() => {
-      if (!isCorrect && microphones - 1 <= 1) {
+      if (!isCorrect && newMicrophoneCount <= 1) {
         setShowPurchasePopup(true);
       } else {
         moveToNextQuestion();
       }
       isProcessingRef.current = false;
-    }, 1500);
+    }, 2000);
   };
 
   const moveToNextQuestion = () => {
