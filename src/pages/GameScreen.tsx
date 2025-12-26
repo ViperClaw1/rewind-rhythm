@@ -71,6 +71,7 @@ const GameScreen = () => {
     setSessionCorrectAnswers,
     getProgressForCategory,
     saveProgress,
+    loading,
   } = useGameState();
 
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -85,13 +86,18 @@ const GameScreen = () => {
   const [currentLevel, setCurrentLevel] = useState(0);
 
   const isProcessingRef = useRef(false);
+  const initializedCategoryRef = useRef<Category | null>(null);
 
-  // Initialize game
+  // Initialize game (once per category, after progress has loaded)
   useEffect(() => {
     if (!selectedCategory) {
       navigate('/categories');
       return;
     }
+
+    if (loading) return;
+    if (initializedCategoryRef.current === selectedCategory) return;
+    initializedCategoryRef.current = selectedCategory;
 
     const progress = getProgressForCategory(selectedCategory);
     const level = progress?.currentLevel || 0;
@@ -102,11 +108,18 @@ const GameScreen = () => {
     setTotalCorrect(correct);
     setTotalAnswered(answered);
 
+    // Reset local question state when entering a category
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer(null);
+    setAnswerState('default');
+    setIsTimerRunning(true);
+    setTimerKey(prev => prev + 1);
+
     // Get questions for current level and shuffle
     const categoryQuestions = getQuestionsUpToLevel(selectedCategory, level);
     const shuffled = shuffleArray(categoryQuestions);
     setQuestions(shuffled);
-  }, [selectedCategory, getProgressForCategory, navigate]);
+  }, [selectedCategory, loading, getProgressForCategory, navigate]);
 
   const currentQuestion = questions[currentQuestionIndex];
 

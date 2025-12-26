@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -11,26 +11,35 @@ interface TimerProps {
 
 const Timer = ({ duration, onTimeUp, isRunning, onTick }: TimerProps) => {
   const [remaining, setRemaining] = useState(duration);
+  const remainingRef = useRef(duration);
+  const firedRef = useRef(false);
 
   useEffect(() => {
     setRemaining(duration);
+    remainingRef.current = duration;
+    firedRef.current = false;
   }, [duration]);
 
   useEffect(() => {
     if (!isRunning) return;
 
+    // Ensure the timer restarts cleanly when resumed.
+    firedRef.current = false;
+
     const interval = setInterval(() => {
-      setRemaining((prev) => {
-        const newValue = prev - 1;
-        if (onTick) onTick(newValue);
-        
-        if (newValue <= 0) {
-          clearInterval(interval);
+      const next = remainingRef.current - 1;
+      remainingRef.current = next;
+
+      if (onTick) onTick(Math.max(next, 0));
+      setRemaining(Math.max(next, 0));
+
+      if (next <= 0) {
+        clearInterval(interval);
+        if (!firedRef.current) {
+          firedRef.current = true;
           onTimeUp();
-          return 0;
         }
-        return newValue;
-      });
+      }
     }, 1000);
 
     return () => clearInterval(interval);
