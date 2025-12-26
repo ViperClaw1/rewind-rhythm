@@ -229,8 +229,14 @@ const GameScreen = () => {
 
   const handleDeclinePurchase = () => {
     setShowPurchasePopup(false);
+
+    // If user still has microphones left, continue playing
+    if (microphones >= 1) {
+      moveToNextQuestion();
+      return;
+    }
     
-    // Save final progress before game over
+    // No microphones left - Game Over
     if (selectedCategory) {
       saveProgress(selectedCategory, currentLevel, totalCorrect, totalAnswered);
     }
