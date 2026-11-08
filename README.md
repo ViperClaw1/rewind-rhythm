@@ -1,22 +1,18 @@
-# Welcome to your Lovable project
+# Rewind Rhythm
+
+A timed trivia game covering Hip-Hop, Movies, TV and R'n'B. Answer each question within 10 seconds, keep your microphones (lives), and climb from Base to Diamond.
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**URL**: <YOUR_PROJECT_URL>
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
+There are several ways of editing this application. Changes pushed to the repository from any of them become part of the project.
 
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Clone this repo, work locally, and push your changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -32,7 +28,11 @@ cd <YOUR_PROJECT_NAME>
 # Step 3: Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Create a .env file with your Supabase project's credentials.
+# VITE_SUPABASE_URL=<YOUR_SUPABASE_URL>
+# VITE_SUPABASE_PUBLISHABLE_KEY=<YOUR_SUPABASE_PUBLISHABLE_KEY>
+
+# Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
@@ -59,15 +59,14 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Run `npm run build` and publish the generated `dist` folder to any static hosting provider. Set the environment variables above on your host, and configure it to serve `index.html` for all routes so that client-side routing works.
 
-## Can I connect a custom domain to my Lovable project?
+## Can I connect a custom domain to this project?
 
 Yes, you can!
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+To connect a domain, open your hosting provider's domain settings, add the domain, and update your DNS records as instructed there.
