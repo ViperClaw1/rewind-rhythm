@@ -7,7 +7,6 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { GameProvider } from "@/hooks/useGameState";
 import Index from "./pages/Index";
 import AuthPage from "./pages/AuthPage";
-import RulesScreen from "./pages/RulesScreen";
 import SplashScreen from "./pages/SplashScreen";
 import CategoriesScreen from "./pages/CategoriesScreen";
 import GoodLuckScreen from "./pages/GoodLuckScreen";
@@ -28,7 +27,6 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<AuthPage />} />
-              <Route path="/rules" element={<RulesScreen />} />
               <Route path="/splash" element={<SplashScreen />} />
               <Route path="/categories" element={<CategoriesScreen />} />
               <Route path="/good-luck" element={<GoodLuckScreen />} />

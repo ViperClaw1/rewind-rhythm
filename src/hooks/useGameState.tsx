@@ -11,8 +11,6 @@ interface UserProgress {
 }
 
 interface GameContextType {
-  hasWatchedRules: boolean | null;
-  setHasWatchedRules: (value: boolean) => Promise<void>;
   selectedCategory: Category | null;
   setSelectedCategory: (category: Category | null) => void;
   microphones: number;
@@ -30,67 +28,21 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
-  const [hasWatchedRules, setHasWatchedRulesState] = useState<boolean | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [microphones, setMicrophones] = useState(DEFAULT_MICROPHONES);
   const [sessionCorrectAnswers, setSessionCorrectAnswers] = useState(0);
   const [progressMap, setProgressMap] = useState<Record<string, UserProgress>>({});
   const [loading, setLoading] = useState(true);
 
-  // Load profile and progress when user changes
+  // Load progress when user changes
   useEffect(() => {
     if (user) {
-      loadProfile();
       loadProgress();
     } else {
-      setHasWatchedRulesState(null);
       setProgressMap({});
       setLoading(false);
     }
   }, [user]);
-
-  const loadProfile = async () => {
-    if (!user) return;
-    
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('has_watched_rules')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error loading profile:', error);
-        return;
-      }
-
-      if (data) {
-        setHasWatchedRulesState(data.has_watched_rules);
-      }
-    } catch (err) {
-      console.error('Error loading profile:', err);
-    }
-  };
-
-  const setHasWatchedRules = async (value: boolean) => {
-    if (!user) return;
-
-    try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ has_watched_rules: value })
-        .eq('user_id', user.id);
-
-      if (error) {
-        console.error('Error updating has_watched_rules:', error);
-        return;
-      }
-
-      setHasWatchedRulesState(value);
-    } catch (err) {
-      console.error('Error updating has_watched_rules:', err);
-    }
-  };
 
   const loadProgress = async () => {
     if (!user) return;
@@ -173,8 +125,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <GameContext.Provider value={{
-      hasWatchedRules,
-      setHasWatchedRules,
       selectedCategory,
       setSelectedCategory,
       microphones,
