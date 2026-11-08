@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,7 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirmPassword?: string }>({});
   
@@ -120,6 +122,18 @@ const AuthPage = () => {
     }
   };
 
+  const passwordToggle = (
+    <button
+      type="button"
+      onClick={() => setShowPassword((show) => !show)}
+      aria-label={showPassword ? 'Hide password' : 'Show password'}
+      disabled={loading}
+      className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-primary transition-colors disabled:opacity-50"
+    >
+      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+    </button>
+  );
+
   return (
     <BackgroundWrapper>
       <div className="min-h-screen flex flex-col items-center justify-center p-6">
@@ -153,15 +167,18 @@ const AuthPage = () => {
               {mode !== 'forgot' && (
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-muted-foreground">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="bg-muted border-border text-foreground"
-                    disabled={loading}
-                  />
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="bg-muted border-border text-foreground pr-10"
+                      disabled={loading}
+                    />
+                    {passwordToggle}
+                  </div>
                   {errors.password && (
                     <p className="text-sm text-destructive">{errors.password}</p>
                   )}
@@ -171,15 +188,18 @@ const AuthPage = () => {
               {mode === 'signup' && (
                 <div className="space-y-2">
                   <Label htmlFor="confirmPassword" className="text-muted-foreground">Confirm Password</Label>
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="bg-muted border-border text-foreground"
-                    disabled={loading}
-                  />
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type={showPassword ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="bg-muted border-border text-foreground pr-10"
+                      disabled={loading}
+                    />
+                    {passwordToggle}
+                  </div>
                   {errors.confirmPassword && (
                     <p className="text-sm text-destructive">{errors.confirmPassword}</p>
                   )}
