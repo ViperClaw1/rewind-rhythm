@@ -9,10 +9,9 @@ interface ProgressBarProps {
 const ProgressBar = ({ currentLevel, correctAnswers }: ProgressBarProps) => {
   const levelInfo = getLevelInfo(currentLevel);
   const nextLevel = LEVELS[currentLevel + 1];
-  const previousRequired = currentLevel > 0 ? LEVELS[currentLevel - 1]?.requiredCorrect || 0 : 0;
-  const answersInLevel = correctAnswers - previousRequired;
-  const requiredForNextLevel = levelInfo.requiredCorrect - previousRequired;
-  const progress = nextLevel 
+  const answersInLevel = correctAnswers - levelInfo.requiredCorrect;
+  const requiredForNextLevel = nextLevel ? nextLevel.requiredCorrect - levelInfo.requiredCorrect : 0;
+  const progress = nextLevel
     ? Math.min((answersInLevel / requiredForNextLevel) * 100, 100)
     : 100;
 

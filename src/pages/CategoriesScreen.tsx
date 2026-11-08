@@ -4,6 +4,7 @@ import { CATEGORIES, type Category } from '@/lib/gameData';
 import BackgroundWrapper from '@/components/layout/BackgroundWrapper';
 import Logo from '@/components/layout/Logo';
 import CategoryCard from '@/components/game/CategoryCard';
+import RulesSheet from '@/components/game/RulesSheet';
 import microphoneImg from '@/assets/microphone.png';
 
 const CategoriesScreen = () => {
@@ -17,6 +18,7 @@ const CategoriesScreen = () => {
 
   return (
     <BackgroundWrapper>
+      <RulesSheet />
       <div className="min-h-screen flex flex-col p-6 py-8">
         {/* Logo at top */}
         <div className="flex justify-center fade-in">

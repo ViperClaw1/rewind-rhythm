@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import BackgroundWrapper from '@/components/layout/BackgroundWrapper';
 import Logo from '@/components/layout/Logo';
+import RulesSheet from '@/components/game/RulesSheet';
 import microphoneImg from '@/assets/microphone.png';
 
 const SplashScreen = () => {
@@ -13,6 +14,7 @@ const SplashScreen = () => {
 
   return (
     <BackgroundWrapper>
+      <RulesSheet autoShow />
       <div className="min-h-screen flex flex-col items-center justify-between p-6 py-12">
         {/* Logo at top */}
         <div className="fade-in" style={{ animationDelay: '0.1s' }}>

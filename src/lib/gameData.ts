@@ -7,8 +7,10 @@ export const CATEGORIES = [
   { id: 'rnb', name: "R'n'B", icon: '🎵' },
 ] as const;
 
+// requiredCorrect = total correct answers needed to enter the level.
+// Must stay in sync with public.compute_level on the server.
 export const LEVELS = [
-  { level: 0, name: 'Base', requiredCorrect: 5 },
+  { level: 0, name: 'Base', requiredCorrect: 0 },
   { level: 1, name: 'Gold', requiredCorrect: 10 },
   { level: 2, name: 'Platinum', requiredCorrect: 15 },
   { level: 3, name: 'Multi-Platinum', requiredCorrect: 20 },

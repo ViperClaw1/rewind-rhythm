@@ -42,6 +42,7 @@ BEGIN
   ASSERT pg_temp.denied('INSERT INTO public.microphone_ledger (user_id, delta, reason) VALUES (auth.uid(), 5, $r$admin$r$)'), 'ledger insert';
   ASSERT pg_temp.denied($q$SELECT public.credit_microphones('x')$q$), 'credit by client';
   UPDATE public.profiles SET has_watched_rules = true; -- still allowed
+  UPDATE public.profiles SET onboarding_version = 1; -- still allowed
 END $$;
 
 -- Game flow.

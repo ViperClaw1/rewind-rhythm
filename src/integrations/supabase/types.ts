@@ -20,6 +20,7 @@ export type Database = {
           email: string | null
           has_watched_rules: boolean
           id: string
+          onboarding_version: number
           updated_at: string
           user_id: string
         }
@@ -28,6 +29,7 @@ export type Database = {
           email?: string | null
           has_watched_rules?: boolean
           id?: string
+          onboarding_version?: number
           updated_at?: string
           user_id: string
         }
@@ -36,6 +38,7 @@ export type Database = {
           email?: string | null
           has_watched_rules?: boolean
           id?: string
+          onboarding_version?: number
           updated_at?: string
           user_id?: string
         }
