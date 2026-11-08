@@ -71,7 +71,7 @@ const AuthPage = () => {
           navigate('/');
         }
       } else if (mode === 'signup') {
-        const { error } = await signUp(email, password);
+        const { error, hasSession } = await signUp(email, password);
         if (error) {
           if (error.message.includes('already registered')) {
             toast({
@@ -86,6 +86,12 @@ const AuthPage = () => {
               variant: "destructive",
             });
           }
+        } else if (!hasSession) {
+          toast({
+            title: "Check Your Email",
+            description: "Follow the link we sent you to confirm your account.",
+          });
+          setMode('signin');
         } else {
           toast({
             title: "Welcome!",
